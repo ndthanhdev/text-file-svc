@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
-import { useData } from "./text-file-editor-svc";
+import { useData } from "./text-file-svc";
 
 const BlockName = "txt-f-prv";
 
