@@ -6,17 +6,17 @@ it("read full", async () => {
 });
 
 it("read hafl", async () => {
-  const { text } = await TextReaderSvc.read("./num.txt", { maxSize: 5 });
+  const { text } = await TextReaderSvc.read("./num.txt", { maxLen: 5 });
   expect(text).toEqual("01234");
 });
 
 it("read over", async () => {
-  const { text } = await TextReaderSvc.read("./num.txt", { maxSize: 15 });
+  const { text } = await TextReaderSvc.read("./num.txt", { maxLen: 15 });
   expect(text).toEqual("0123456789");
 });
 
 it("read 0", async () => {
-  const { text } = await TextReaderSvc.read("./num.txt", { maxSize: 0 });
+  const { text } = await TextReaderSvc.read("./num.txt", { maxLen: 0 });
   expect(text).toEqual("");
 });
 

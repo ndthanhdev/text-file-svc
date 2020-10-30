@@ -1,6 +1,6 @@
 /**
  * @typedef ReadOptions
- * @property {number} maxSize limit size in KB
+ * @property {number} maxLen limit size in KB
  */
 
 function isUrl(urlOrPath) {
@@ -8,7 +8,7 @@ function isUrl(urlOrPath) {
 }
 
 const DefaultOptions = {
-  maxSize: Number.MAX_SAFE_INTEGER, // 100kb
+  maxLen: Number.MAX_SAFE_INTEGER, // 100kb
   chunkSize: 100 * 1024 // 128kb
 };
 
@@ -40,23 +40,23 @@ export async function read(urlOrPath, options = {}) {
   };
 }
 
-async function readText(url, { maxSize, chunkSize }) {
+async function readText(url, { maxLen, chunkSize }) {
   const blob = await readBlob(url);
 
-  maxSize = Math.min(maxSize, blob.size);
+  maxLen = Math.min(maxLen, blob.size);
 
   let r = "";
   let startOffset = 0;
-  let endOffset = Math.min(maxSize, startOffset + chunkSize);
+  let endOffset = Math.min(maxLen, startOffset + chunkSize);
 
-  while (startOffset < maxSize) {
+  while (startOffset < maxLen) {
     const [chunkText, nextOffset] = await readChunk(
       blob,
       startOffset,
       endOffset
     );
     startOffset = nextOffset;
-    endOffset = startOffset + chunkSize;
+    endOffset = Math.min(maxLen, startOffset + chunkSize);
     r += chunkText;
   }
 
